@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
 import {ModalProvider} from "@/components/providers/modal-provider";
+import {ClerkProvider} from "@clerk/nextjs";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -20,20 +21,24 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
+        <ClerkProvider>
+            <html lang="en">
 
-        <html lang="en">
+            <body className={inter.className}>
 
-        <body className={inter.className}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <ModalProvider />
-            {children}
-        </ThemeProvider>
-        </body>
-        </html>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+            >
+                <ModalProvider/>
+                {children}
+            </ThemeProvider>
+            </body>
+            </html>
+        </ClerkProvider>
+
+
     );
 }

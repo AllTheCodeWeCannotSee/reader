@@ -1,8 +1,16 @@
 import {NextResponse} from "next/server";
 import {db} from "@/lib/db";
+import {currentUser} from "@/lib/current-user";
 
 
 export async function POST(req: Request) {
+    const user = await currentUser();
+
+    if (!user) {
+        return new NextResponse("Unauthorized", {status: 401});
+    }
+
+
     try {
         const { name, url } = await req.json();
 
@@ -10,6 +18,7 @@ export async function POST(req: Request) {
             data: {
                 name: name,
                 fileUrl: url,
+                userId: user.id,
             }
         });
 
