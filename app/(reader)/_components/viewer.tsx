@@ -26,12 +26,13 @@ const Viewer = ({ bookName, bookFileUrl }: ViewerProps) => {
             while (parentDiv && parentDiv.tagName !== "DIV") {
                     parentDiv = parentDiv.parentElement;
             }
-            console.log(parentDiv)
             if (parentDiv) {
                 let sectionContent = "";
                 let nextElement = parentDiv.nextElementSibling;
-                while (nextElement && nextElement.matches("p")) {
-
+                while (nextElement) {
+                    if (nextElement.querySelector('b')) {
+                        break;
+                    }
                     sectionContent += (nextElement.textContent || "") + "\n";
                     nextElement = nextElement.nextElementSibling;
                 }
